@@ -1,0 +1,5 @@
+#Mac cruft
+.DS_Store
+
+#vim swap files
+*.swp
