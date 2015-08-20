@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style type="text/css">
-      html, body { height: 100%; margin: 0; padding: 0; }
-      #map { height: 100%; }
-    </style>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/custom.css" rel="stylesheet">
+
   </head>
   <body>
-    <ul data-bind="foreach: parkList">
-      <li data-bind="text: name"></li>
-    </ul>
-    <div id="map"></div>
+   <div id="map-canvas"></div>
+   <div class="container-fluid" id="list-view">
+     <div class="row"> 
+
+        <div class="col-xs-3" id="left">
+            <ul data-bind="foreach: parkList">
+              <li data-bind="text: name"></li>
+            </ul>
+        </div>
+
+        <div class="col-xs-9" >
+        </div>
+
+      </div>
+   </div>
+
+    <script src="js/libs/knockout-3.3.0.js"></script>
+    <script src="js/map.js"></script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxbPfcgksqswYf89jg92_ij9MeVIB7784&callback=initMap">
     </script>
-    <script src="js/libs/knockout-3.3.0.js"></script>
-    <script src="js/map.js"></script>
   </body>
 </html>
