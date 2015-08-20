@@ -1,14 +1,18 @@
 // Whole-script strict mode syntax
 "use strict";
 
-var initialRestaurants = [
+var initialParks = [
   {
-    name : "Smokin' T's",
-    foodType : "bbq"
+    name : "Illinois Beach State Park",
+    latLng : {lat: 42.423610, lng: -87.805419}
   },
   {
-    name : "Real Urban Barbecue",
-    foodType : "bbq"
+    name : "Moraine Hills State Park",
+    latLng : {lat: 42.309754, lng: -88.227623}
+  },
+  {
+    name : "Starved Rock State Park",
+    latLng : {lat: 41.319040, lng: -88.994262}
   }
 ]
 
@@ -16,26 +20,35 @@ var map;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 42.190220, lng: -87.941175},
-    zoom: 12
+    zoom: 8
   });
+  parkViewModel.drawMarkers();
 }
 
-var Restaurant = function(data){
+var Park = function(data){
   this.name = ko.observable(data.name);
-  this.foodType = ko.observable(data.foodType);
+  this.latLng = ko.observable(data.latLng);
 }
 
 var ViewModel = function() {
   var self = this;
 
-  this.restaurantList = ko.observableArray([]);
+  this.parkList = ko.observableArray([]);
 
-  initialRestaurants.forEach(function(item){
-    self.restaurantList.push( new Restaurant(item) );
+  initialParks.forEach(function(item){
+    self.parkList.push( new Park(item) );
   });
 
-  self.currentRestaurant = this.restaurantList()[0];
-  
+  this.drawMarkers = function() {
+    self.parkList().forEach(function(item){
+      item.marker = new google.maps.Marker({
+        position: item.latLng(),
+        title: item.name()
+      });
+      item.marker.setMap(map);
+    });
+  };
 }
 
-ko.applyBindings(new ViewModel());
+var parkViewModel = new ViewModel();
+ko.applyBindings(parkViewModel);
