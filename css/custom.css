@@ -4,20 +4,9 @@ html, body {
 }
 
 body{
-  	padding-top:50px; /*padding for navbar*/
+  	padding-top:50px; /*padding for search bar*/
 }
 
-/*
-#list-view, #list-view>.row {
-  height: 100%; 
-}
-#list-view>.row {
-  overflow-y: scroll; 
-}
-#left {
-  height: 100%;
-}
-*/
 
 /**
  * Place the map on the right 75% of the screen.

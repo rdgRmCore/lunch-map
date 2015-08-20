@@ -3,7 +3,7 @@
 
 var initialParks = [
   {
-    name : "Illinois Beach State Park",
+    name : "Illinois Beach",
     latLng : {lat: 42.423610, lng: -87.805419},
     activities:[
       "Bike Trails", "Camping", "Cross Country Skiing", "Fishing",
@@ -11,7 +11,7 @@ var initialParks = [
     ]
   },
   {
-    name : "Moraine Hills State Park",
+    name : "Moraine Hills",
     latLng : {lat: 42.309754, lng: -88.227623},
     activities:[
       "Bike Trails", "Boating", "Cross Country Skiing", "Fishing",
@@ -20,14 +20,14 @@ var initialParks = [
     ]
   },
   {
-    name : "Starved Rock State Park",
+    name : "Starved Rock",
     latLng : {lat: 41.319040, lng: -88.994262},
     activities:[
       "Boating", "Camping", "Fishing", "Hiking Trails", "Hunting"
     ]
   },
   {
-    name : "Rock Cut State Park",
+    name : "Rock Cut",
     latLng : {lat: 42.342048, lng: -88.973447},
     activities:[
       "Bike Trails", "Boating", "Camping", "Cross Country Skiing",
@@ -37,7 +37,7 @@ var initialParks = [
     ]
   },
   {
-    name : "Chain O'Lakes State Park",
+    name : "Chain O'Lakes",
     latLng : {lat: 42.457765, lng: -88.200289},
     activities:[
       "Archery Range", "Bike Trails", "Boating", "Camping",
@@ -86,7 +86,8 @@ var ViewModel = function() {
     self.parkList().forEach(function(item){
       item.marker = new google.maps.Marker({
         position: item.latLng(),
-        title: item.name()
+        title: item.name(),
+        animation: google.maps.Animation.DROP
       });
       item.marker.setMap(map);
     });
