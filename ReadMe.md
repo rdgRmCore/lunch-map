@@ -1,3 +1,3 @@
-#Lunch Places
+#Illinois State Parks
 
-This list and map of lunch places is for Udacity Front End Project 5.
+This list and map of Illinois State Parks is for Udacity Front End Project 5.
