@@ -1,5 +1,8 @@
 // Whole-script strict mode syntax
 "use strict";
+//var WIKIPEDIA_BASE = "https://en.wikipedia.org/w/api.php?action=query&titles=";
+var WIKIPEDIA_BASE = "http://en.wikipedia.org/w/api.php?action=parse&format=json&redirects=&prop=wikitext&page="
+
 
 var initialParks = [
   {
@@ -9,7 +12,7 @@ var initialParks = [
       "Bike Trails", "Camping", "Cross Country Skiing", "Fishing",
       "Geocaching", "Hiking Trails", "SCUBA Diving", "Swimming"
     ]
-  },
+  }/*,
   {
     name : "Moraine Hills",
     latLng : {lat: 42.309754, lng: -88.227623},
@@ -45,6 +48,7 @@ var initialParks = [
       "Hiking Trails", "Hunting", "Metal Detecting", "Shelter Reservations"
     ]
   }
+*/
 ]
 
 function initialize(){
@@ -53,7 +57,24 @@ function initialize(){
     zoom: 8
   });
   parkViewModel.drawMarkers();
+  parkViewModel.loadWikiInfo();
 }
+
+function findUrls(searchText){
+    var regex=/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    var result= searchText.match(regex);
+    if(result){return result;}else{return false;}
+}
+
+function findLinks(s) {
+          var hlink = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+          return (s.replace(hlink, function($0, $1, $2) {
+              s = $0.substring(1, $0.length);
+              while (s.length > 0 && s.charAt(s.length - 1) == '.') s = s.substring(0, s.length - 1);
+
+              return ' ' + s + '';
+          }));
+      }
 
 var map;
 function initMap() {
@@ -110,7 +131,28 @@ var ViewModel = function() {
 
     self.drawMarkers();
   };
+  
+  this.loadWikiInfo = function() {
+    self.parkList().forEach(function(item){
+      var searchString = encodeURIComponent(item.name() + " State Park");
+      var wikipediaUrl = WIKIPEDIA_BASE + searchString;
+      $.ajax({
+        url: wikipediaUrl,
+        dataType: "jsonp",
+        cache: true,
+        success: function (data) {
+                item.wikiInfo = data;
+                var links = findUrls(data.parse.wikitext['*']);
+                console.dir(links);
+                console.log("Got wikipedia data for: " + item.name());
+                console.dir(data);
+              } 
+      });
 
+    });
+  };
+
+  //Function that is called when a park list item is clicked
   this.parkClick = function(Park) {
     console.log("You clicked on a park: " + Park.name());
   };
