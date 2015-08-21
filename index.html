@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="description" content="A list and map of Illinois State Parks" />
+    <title> Illinois State Parks </title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -10,21 +12,46 @@
 
   </head>
   <body>
-   <div id="map-canvas"></div>
-   <div class="container-fluid" id="list-view">
-     <div class="row"> 
+
+  <header class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <span id="logo">Illinois State Parks </span>
+      <div>
+        <div id="search-bar" class="navbar-right input-group col-xs-3">
+          <input type="text" class="search-query form-control" 
+                 placeholder="Search" />
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    
+    <!-- The map canvas will appear in the lower right of the page-->
+    <div id="map-canvas"></div>
+
+    <!-- Use a fluid container from bootstrap -->
+    <div class="container-fluid" id="list-view">
+      <!-- The main content area is two bootstrap columns with the list-view
+           on the left-->
+      <div class="row"> 
 
         <div class="col-xs-3" id="left">
-            <ul data-bind="foreach: parkList">
-              <li data-bind="text: name"></li>
-            </ul>
+          <!-- Use knockout data bindings to generate a list of park names -->
+          <ul data-bind="foreach: parkList">
+            <li data-bind="text: name"></li>
+          </ul>
         </div>
 
         <div class="col-xs-9" >
         </div>
 
       </div>
-   </div>
+    </div>
 
     <script src="js/libs/knockout-3.3.0.js"></script>
     <script src="js/map.js"></script>

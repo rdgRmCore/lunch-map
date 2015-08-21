@@ -4,20 +4,47 @@ html, body {
 }
 
 body{
-  	padding-top:50px; /*padding for search bar*/
+  	padding-top:70px; /*padding for search bar*/
+}
+
+.white {
+  color: white;
 }
 
 
 /**
  * Place the map on the right 75% of the screen.
- * Push it down 50 pixels to make room for a search bar 
+ * Push it down 70 pixels to make room for a search bar 
 **/
 #map-canvas {
 	width:75%;
     height:calc(100% - 0);
     position:absolute;
     right:16px;
-    top:50px;
+    top:70px;
     bottom:0;
     overflow:hidden;
+}
+
+/**
+ * Style the logo into all caps and white.
+**/
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+}
+
+/**
+ * Style the search bar.
+**/
+
+#search-bar {
+  padding-top: 9px;
 }
