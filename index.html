@@ -16,12 +16,14 @@
   <header class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
       <span id="logo">Illinois State Parks </span>
-      <div>
-        <div id="search-bar" class="navbar-right input-group col-xs-3">
-          <input type="text" class="search-query form-control" 
-                 placeholder="Search" />
+      <div id="search-bar">
+        <div class="navbar-right input-group col-xs-3">
+
+          <input data-bind="value: query, valueUpdate: 'keyup'" type="text" 
+                 class="search-query form-control" placeholder="Search" />
+
           <span class="input-group-btn">
-            <button class="btn btn-primary" type="button">
+            <button search" class="btn btn-primary" type="button">
               <span class="glyphicon glyphicon-search"></span>
             </button>
           </span>

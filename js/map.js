@@ -58,13 +58,6 @@ function initialize(){
 var map;
 function initMap() {
   google.maps.event.addDomListener(window, 'load', initialize);
-/*
-  map = new google.maps.Map(document.getElementById("map-canvas"), {
-    center: {lat: 42.190220, lng: -87.941175},
-    zoom: 8
-  });
-  parkViewModel.drawMarkers();
-*/
 }
 
 var Park = function(data){
@@ -82,6 +75,7 @@ var ViewModel = function() {
     self.parkList.push( new Park(item) );
   });
 
+  /* Draw markers for every park in the park list */
   this.drawMarkers = function() {
     self.parkList().forEach(function(item){
       item.marker = new google.maps.Marker({
@@ -92,8 +86,33 @@ var ViewModel = function() {
       item.marker.setMap(map);
     });
   };
+  
+  // Respond to letters typed in the search box
+  this.search = function(value) {
+    // Start by clearing all the markers from the map
+    self.parkList().forEach(function(item){
+      item.marker.setMap(null);
+    });
+
+    // then remove all parks from the park list
+    self.parkList.removeAll();
+
+    // search through all the parks looking for the entered text
+    initialParks.forEach(function(item){
+      // if the entered text is found, add the park to the park list
+      if(item.name.toLowerCase().indexOf(value.toLowerCase()) >= 0){
+        self.parkList.push( new Park(item) );
+      }
+    });
+
+    self.drawMarkers();
+  };
+
+  // The text that has been entered into the search box
+  this.query = ko.observable('');
 }
 
 var parkViewModel = new ViewModel();
 ko.applyBindings(parkViewModel);
+parkViewModel.query.subscribe(parkViewModel.search);
 
