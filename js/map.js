@@ -84,6 +84,9 @@ var ViewModel = function() {
         animation: google.maps.Animation.DROP
       });
       item.marker.setMap(map);
+      item.marker.addListener('click', function(){
+        console.log("Marker clicked " + this.title);
+      });
     });
   };
   
@@ -106,6 +109,10 @@ var ViewModel = function() {
     });
 
     self.drawMarkers();
+  };
+
+  this.parkClick = function(Park) {
+    console.log("You clicked on a park: " + Park.name());
   };
 
   // The text that has been entered into the search box
