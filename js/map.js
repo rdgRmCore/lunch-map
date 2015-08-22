@@ -142,7 +142,11 @@ var ViewModel = function() {
         cache: true,
         success: function (data) {
                 item.wikiInfo = data;
-                var links = findUrls(data.parse.wikitext['*']);
+                //var links = findUrls(data.parse.wikitext['*']);
+                var links = URI.withinString(data.parse.wikitext['*'], function(url){
+                  console.log(url);
+                  return "<a>" + url + "</a>";
+                });
                 console.dir(links);
                 console.log("Got wikipedia data for: " + item.name());
                 console.dir(data);
