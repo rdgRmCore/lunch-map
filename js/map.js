@@ -13,8 +13,8 @@ var initialParks = [
       "Bike Trails", "Camping", "Cross Country Skiing", "Fishing",
       "Geocaching", "Hiking Trails", "SCUBA Diving", "Swimming"
     ]
-  },
-/* */
+  }/*,
+/* 
   {
     name : "Moraine Hills",
     latLng : {lat: 42.309754, lng: -88.227623},
@@ -50,7 +50,7 @@ var initialParks = [
       "Hiking Trails", "Hunting", "Metal Detecting", "Shelter Reservations"
     ]
   }
-/* */
+* */
 ]
 
 function initialize(){
@@ -60,6 +60,7 @@ function initialize(){
   });
   parkViewModel.drawMarkers();
   parkViewModel.loadWikiInfo();
+  parkViewModel.createInfoWindow();
 }
 
 var map;
@@ -97,6 +98,7 @@ var ViewModel = function() {
       item.marker.addListener('click', function(){
         console.log("Marker clicked " + this.title);
         console.log("The official web site is: " + item.officialUrl);
+        self.displayOfficialUrl(item);
       });
     });
   };
@@ -154,15 +156,28 @@ var ViewModel = function() {
 
     });
   };
+  //Function that displays official website url
+  this.displayOfficialUrl = function (Park) {
+    console.log("displayOfficialUrl called." );
+    self.infoWindow.open(map, Park.marker);
+  };
 
   //Function that is called when a park list item is clicked
   this.parkClick = function(Park) {
     console.log("You clicked on a park: " + Park.name());
     console.log("The official web site is: " + Park.officialUrl);
+    self.displayOfficialUrl(Park);
   };
 
   // The text that has been entered into the search box
   this.query = ko.observable('');
+
+  // create an info window
+  this.createInfoWindow = function() {
+    self.infoWindow = new google.maps.InfoWindow({
+      content: "View the official website"
+    });
+  };
 }
 
 var parkViewModel = new ViewModel();
