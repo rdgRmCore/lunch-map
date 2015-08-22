@@ -71,6 +71,7 @@ var Park = function(data){
   this.name = ko.observable(data.name);
   this.latLng = ko.observable(data.latLng);
   this.activities = ko.observable(data.activities);
+  this.officialUrl = "Unable to retrieve data from Wikipedia."
 }
 
 var ViewModel = function() {
@@ -82,7 +83,7 @@ var ViewModel = function() {
     self.parkList.push( new Park(item) );
   });
 
-  /* Draw markers for every park in the park list */
+  // Draw markers for every park in the park list
   this.drawMarkers = function() {
     self.parkList().forEach(function(item){
       item.marker = new google.maps.Marker({
@@ -91,6 +92,8 @@ var ViewModel = function() {
         animation: google.maps.Animation.DROP
       });
       item.marker.setMap(map);
+
+      // Add a click handler to the marker
       item.marker.addListener('click', function(){
         console.log("Marker clicked " + this.title);
         console.log("The official web site is: " + item.officialUrl);
@@ -116,9 +119,11 @@ var ViewModel = function() {
       }
     });
 
+    // Draw the markers that matched the entered text
     self.drawMarkers();
   };
   
+  // Retrieve data from the Wikipedia API
   this.loadWikiInfo = function() {
     self.parkList().forEach(function(item){
       var searchString = encodeURIComponent(item.name() + " State Park");
@@ -128,18 +133,22 @@ var ViewModel = function() {
         dataType: "jsonp",
         cache: true,
         success: function (data) {
-                //look for urls inside the string returned from Wikipedia
-                var links = URI.withinString(data.parse.wikitext['*'], function(url){
-                  console.log(url);
-                  //pull out the official website address by matching beginning of url
-                  if(url.substring(0, DNR_URL.length) === DNR_URL){
-                    item.officialUrl = url;
-                  }
-                  return "<a>" + url + "</a>";
-                });
-                console.dir(links);
-                console.log("Got wikipedia data for: " + item.name());
-                console.dir(data);
+                if( !(typeof data.parse === "undefined") ){
+                  //look for urls inside the string returned from Wikipedia
+                  var links = URI.withinString(data.parse.wikitext['*'], function(url){
+                    console.log(url);
+                    //pull out the official website address by matching beginning of url
+                    if(url.substring(0, DNR_URL.length) === DNR_URL){
+                      item.officialUrl = url;
+                    }
+                    return "<a>" + url + "</a>";
+                  });
+                  console.dir(links);
+                  console.log("Got wikipedia data for: " + item.name());
+                  console.dir(data);
+                } else {
+                  console.log("Unable to retrieve wikipedia data for: " + item.name());
+                }
               } 
       });
 
