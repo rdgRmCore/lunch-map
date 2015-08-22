@@ -1,7 +1,8 @@
 // Whole-script strict mode syntax
 "use strict";
 //var WIKIPEDIA_BASE = "https://en.wikipedia.org/w/api.php?action=query&titles=";
-var WIKIPEDIA_BASE = "http://en.wikipedia.org/w/api.php?action=parse&format=json&redirects=&prop=wikitext&page="
+var WIKIPEDIA_BASE = "http://en.wikipedia.org/w/api.php?action=parse&format=json&redirects=&prop=wikitext&page=";
+var DNR_URL = "http://dnr.state.il.us";
 
 
 var initialParks = [
@@ -12,7 +13,8 @@ var initialParks = [
       "Bike Trails", "Camping", "Cross Country Skiing", "Fishing",
       "Geocaching", "Hiking Trails", "SCUBA Diving", "Swimming"
     ]
-  }/*,
+  },
+/* */
   {
     name : "Moraine Hills",
     latLng : {lat: 42.309754, lng: -88.227623},
@@ -48,7 +50,7 @@ var initialParks = [
       "Hiking Trails", "Hunting", "Metal Detecting", "Shelter Reservations"
     ]
   }
-*/
+/* */
 ]
 
 function initialize(){
@@ -59,22 +61,6 @@ function initialize(){
   parkViewModel.drawMarkers();
   parkViewModel.loadWikiInfo();
 }
-
-function findUrls(searchText){
-    var regex=/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-    var result= searchText.match(regex);
-    if(result){return result;}else{return false;}
-}
-
-function findLinks(s) {
-          var hlink = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-          return (s.replace(hlink, function($0, $1, $2) {
-              s = $0.substring(1, $0.length);
-              while (s.length > 0 && s.charAt(s.length - 1) == '.') s = s.substring(0, s.length - 1);
-
-              return ' ' + s + '';
-          }));
-      }
 
 var map;
 function initMap() {
@@ -107,6 +93,7 @@ var ViewModel = function() {
       item.marker.setMap(map);
       item.marker.addListener('click', function(){
         console.log("Marker clicked " + this.title);
+        console.log("The official web site is: " + item.officialUrl);
       });
     });
   };
@@ -141,10 +128,13 @@ var ViewModel = function() {
         dataType: "jsonp",
         cache: true,
         success: function (data) {
-                item.wikiInfo = data;
-                //var links = findUrls(data.parse.wikitext['*']);
+                //look for urls inside the string returned from Wikipedia
                 var links = URI.withinString(data.parse.wikitext['*'], function(url){
                   console.log(url);
+                  //pull out the official website address by matching beginning of url
+                  if(url.substring(0, DNR_URL.length) === DNR_URL){
+                    item.officialUrl = url;
+                  }
                   return "<a>" + url + "</a>";
                 });
                 console.dir(links);
@@ -159,6 +149,7 @@ var ViewModel = function() {
   //Function that is called when a park list item is clicked
   this.parkClick = function(Park) {
     console.log("You clicked on a park: " + Park.name());
+    console.log("The official web site is: " + Park.officialUrl);
   };
 
   // The text that has been entered into the search box
