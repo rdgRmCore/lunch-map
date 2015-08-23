@@ -41,6 +41,9 @@ body{
   font-weight: bold;
 }
 
+#left {
+  padding-right: 45px;
+}
 /**
  * Style the search bar.
 **/

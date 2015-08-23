@@ -44,9 +44,11 @@
 
         <div class="col-xs-3" id="left">
           <!-- Use knockout data bindings to generate a list of park names -->
-          <ul data-bind="foreach: parkList">
-            <li data-bind="text: name, click: $parent.parkClick"></li>
-          </ul>
+          <div class="list-group">
+            <ul data-bind="foreach: parkList">
+              <li class="list-group-item" data-bind="text: name, click: $parent.parkClick"></li>
+            </ul>
+          </div>
         </div>
 
         <div class="col-xs-9" >
