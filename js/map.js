@@ -13,8 +13,8 @@ var initialParks = [
       "Bike Trails", "Camping", "Cross Country Skiing", "Fishing",
       "Geocaching", "Hiking Trails", "SCUBA Diving", "Swimming"
     ]
-  }/*,
-/* 
+  },
+/* */
   {
     name : "Moraine Hills",
     latLng : {lat: 42.309754, lng: -88.227623},
@@ -50,7 +50,7 @@ var initialParks = [
       "Hiking Trails", "Hunting", "Metal Detecting", "Shelter Reservations"
     ]
   }
-* */
+/* */
 ]
 
 function initialize(){
@@ -97,7 +97,6 @@ var ViewModel = function() {
       // Add a click handler to the marker
       item.marker.addListener('click', function(){
         console.log("Marker clicked " + this.title);
-        console.log("The official web site is: " + item.officialUrl);
         self.displayOfficialUrl(item);
       });
     });
@@ -138,16 +137,13 @@ var ViewModel = function() {
                 if( !(typeof data.parse === "undefined") ){
                   //look for urls inside the string returned from Wikipedia
                   var links = URI.withinString(data.parse.wikitext['*'], function(url){
-                    console.log(url);
                     //pull out the official website address by matching beginning of url
                     if(url.substring(0, DNR_URL.length) === DNR_URL){
                       item.officialUrl = url;
                     }
                     return "<a>" + url + "</a>";
                   });
-                  console.dir(links);
                   console.log("Got wikipedia data for: " + item.name());
-                  console.dir(data);
                 } else {
                   console.log("Unable to retrieve wikipedia data for: " + item.name());
                 }
@@ -163,9 +159,9 @@ var ViewModel = function() {
   };
 
   //Function that is called when a park list item is clicked
-  this.parkClick = function(Park) {
-    console.log("You clicked on a park: " + Park.name());
+  this.parkClick = function(Park, Event) {
     console.log("The official web site is: " + Park.officialUrl);
+    Event.target.className += " active";
     self.displayOfficialUrl(Park);
   };
 
