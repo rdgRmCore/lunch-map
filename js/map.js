@@ -149,9 +149,9 @@ var ViewModel = function() {
                 }
               } 
       });
-
     });
   };
+
   //Function that displays official website url
   this.displayOfficialUrl = function (Park) {
     console.log("displayOfficialUrl called." );
@@ -162,10 +162,13 @@ var ViewModel = function() {
   this.parkClick = function(Park, Event) {
     console.log("The official web site is: " + Park.officialUrl);
 
+    // Using jQuery, check for any active list items
     if($(".active").length){
+      // clear any active list items
       $(".active").removeClass("active");
     }
 
+    // Add the active class to the list item that was clicked.
     Event.target.className += " active";
     self.displayOfficialUrl(Park);
   };
