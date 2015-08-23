@@ -161,6 +161,11 @@ var ViewModel = function() {
   //Function that is called when a park list item is clicked
   this.parkClick = function(Park, Event) {
     console.log("The official web site is: " + Park.officialUrl);
+
+    if($(".active").length){
+      $(".active").removeClass("active");
+    }
+
     Event.target.className += " active";
     self.displayOfficialUrl(Park);
   };
