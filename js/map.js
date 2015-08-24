@@ -3,6 +3,7 @@
 //var WIKIPEDIA_BASE = "https://en.wikipedia.org/w/api.php?action=query&titles=";
 var WIKIPEDIA_BASE = "http://en.wikipedia.org/w/api.php?action=parse&format=json&redirects=&prop=wikitext&page=";
 var DNR_URL = "http://dnr.state.il.us";
+var OFFICIAL_INFO = "For more information visit the official webiste.<br>";
 
 
 var initialParks = [
@@ -42,12 +43,10 @@ var initialParks = [
     ]
   },
   {
-    name : "Chain O'Lakes",
-    latLng : {lat: 42.457765, lng: -88.200289},
+    name : "Matthiessen",
+    latLng : {lat: 41.347118, lng: -89.012106},
     activities:[
-      "Archery Range", "Bike Trails", "Boating", "Camping",
-      "Cross Country Skiing", "Equestrian Trails", "Fishing",
-      "Hiking Trails", "Hunting", "Metal Detecting", "Shelter Reservations"
+      "Picnicking", "Horseback Riding", "Equestrian Camping", "Hunting", "Trails"
     ]
   }
 /* */
@@ -96,7 +95,6 @@ var ViewModel = function() {
 
       // Add a click handler to the marker
       item.marker.addListener('click', function(){
-        console.log("Marker clicked " + this.title);
         self.displayOfficialUrl(item);
       });
     });
@@ -143,7 +141,6 @@ var ViewModel = function() {
                     }
                     return "<a>" + url + "</a>";
                   });
-                  console.log("Got wikipedia data for: " + item.name());
                 } else {
                   console.log("Unable to retrieve wikipedia data for: " + item.name());
                 }
@@ -154,14 +151,15 @@ var ViewModel = function() {
 
   //Function that displays official website url
   this.displayOfficialUrl = function (Park) {
-    console.log("displayOfficialUrl called." );
+    var titleText = "<h4>" + Park.name() + "</h4>";
+    var linkText = '<a href="' + Park.officialUrl + '">' + OFFICIAL_INFO + '</a>';
+    var infoText = titleText + linkText;
+    self.infoWindow.setContent(infoText);
     self.infoWindow.open(map, Park.marker);
   };
 
   //Function that is called when a park list item is clicked
   this.parkClick = function(Park, Event) {
-    console.log("The official web site is: " + Park.officialUrl);
-
     // Using jQuery, check for any active list items
     if($(".active").length){
       // clear any active list items
