@@ -106,6 +106,10 @@ var ViewModel = function() {
 
       // Add a click handler to the marker
       item.marker.addListener('click', function(){
+      item.marker.setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(function () {
+          item.marker.setAnimation(null);
+      }, 700); // maps duration of one bounce
         self.displayOfficialUrl(item);
       });
     });
