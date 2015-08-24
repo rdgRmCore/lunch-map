@@ -52,6 +52,15 @@ var initialParks = [
 /* */
 ]
 
+// Sort an array by the name property
+function SortByName(a,b) {
+  if (a.name < b.name)
+    return -1;
+  if (a.name > b.name)
+    return 1;
+  return 0;
+}
+
 function initialize(){
   map = new google.maps.Map(document.getElementById("map-canvas"), {
     center: {lat: 42.190220, lng: -87.941175},
@@ -79,6 +88,8 @@ var ViewModel = function() {
 
   this.parkList = ko.observableArray([]);
 
+  // Alphabetize the list of park names
+  initialParks.sort(SortByName);
   initialParks.forEach(function(item){
     self.parkList.push( new Park(item) );
   });
