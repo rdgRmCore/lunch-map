@@ -4,6 +4,7 @@
 var WIKIPEDIA_BASE = "http://en.wikipedia.org/w/api.php?action=parse&format=json&redirects=&prop=wikitext&page=";
 var DNR_URL = "http://dnr.state.il.us";
 var OFFICIAL_INFO = "For more information visit the official webiste.<br>";
+var UNABLE = "Unable";
 
 
 var initialParks = [
@@ -106,10 +107,13 @@ var ViewModel = function() {
 
       // Add a click handler to the marker
       item.marker.addListener('click', function(){
-      item.marker.setAnimation(google.maps.Animation.BOUNCE);
-      setTimeout(function () {
-          item.marker.setAnimation(null);
-      }, 700); // maps duration of one bounce
+        // Add a bounce animation when marker is clicked.
+        item.marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function () {
+            item.marker.setAnimation(null);
+        }, 700); // maps duration of one bounce
+
+        // display additional information in an infowindow
         self.displayOfficialUrl(item);
       });
     });
@@ -167,7 +171,13 @@ var ViewModel = function() {
   //Function that displays official website url
   this.displayOfficialUrl = function (Park) {
     var titleText = "<h4>" + Park.name() + "</h4>";
-    var linkText = '<a href="' + Park.officialUrl + '">' + OFFICIAL_INFO + '</a>';
+
+    var  linkText = '<a href="' + Park.officialUrl + '">' + OFFICIAL_INFO + '</a>';
+    // If the call to wikipedia fails to retrieve a valid url
+    if(Park.officialUrl.substring(0, UNABLE.length) === UNABLE){
+      linkText = '';
+    }
+
     var infoText = titleText + linkText;
     self.infoWindow.setContent(infoText);
     self.infoWindow.open(map, Park.marker);
