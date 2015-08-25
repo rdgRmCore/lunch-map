@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <meta name="description" content="A list and map of Illinois State Parks" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <title> Illinois State Parks </title>
 
     <!-- Bootstrap Core CSS -->
@@ -15,15 +19,15 @@
 
   <header class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
-      <span id="logo">Illinois State Parks </span>
-      <div id="search-bar">
+      <span class="logo">Illinois State Parks </span>
+      <div class="search-bar">
         <div class="navbar-right input-group col-xs-3">
 
           <input data-bind="value: query, valueUpdate: 'keyup'" type="text" 
-                 class="search-query form-control" placeholder="Search" />
+                 class="search-query form-control" placeholder="Search">
 
           <span class="input-group-btn">
-            <button search" class="btn btn-primary" type="button">
+            <button class="btn btn-default" type="button">
               <span class="glyphicon glyphicon-search"></span>
             </button>
           </span>
@@ -34,7 +38,7 @@
 
     
     <!-- The map canvas will appear in the lower right of the page-->
-    <div id="map-canvas"></div>
+    <div class="map-canvas" id="park-map"></div>
 
     <!-- Use a fluid container from bootstrap -->
     <div class="container-fluid" id="list-view">
@@ -42,7 +46,7 @@
            on the left-->
       <div class="row"> 
 
-        <div class="col-xs-3" id="left">
+        <div class="col-xs-3 left">
           <!-- Use knockout data bindings to generate a list of park names -->
           <div class="list-group">
             <ul data-bind="foreach: parkList">

@@ -1,10 +1,11 @@
 
-html, body { 
+html, 
+body { 
   height: 100%; 
 }
 
 body{
-  	padding-top:70px; /*padding for search bar*/
+  padding-top:70px; /*padding for search bar*/
 }
 
 .white {
@@ -12,14 +13,20 @@ body{
 }
 
 /* Document level adjustments */
-html,body, .iw-text {
+html,
+body, 
+.iw-text {
   font-size: 17px;
 }
 @media (max-width: 900px) {
-  html,body, .iw-text { font-size: 15px; }
+  html,
+  body, 
+  .iw-text { font-size: 15px; }
 }
 @media (max-width: 400px) {
-  html,body, .iw-text { font-size: 13px; }
+  html,
+  body, 
+  .iw-text { font-size: 13px; }
 }
 
 /* Type will scale with document */
@@ -36,26 +43,25 @@ h4 {
   font-size: 1.5rem;
 }
 
-
 /**
  * Place the map on the right 75% of the screen.
  * Push it down 70 pixels to make room for a search bar 
 **/
-#map-canvas {
-	width:75%;
-    height:calc(100% - 0);
-    position:absolute;
-    right:16px;
-    top:70px;
-    bottom:0;
-    overflow:hidden;
+.map-canvas {
+  width:75%;
+  height:calc(100% - 0);
+  position:absolute;
+  right:16px;
+  top:70px;
+  bottom:0;
+  overflow:hidden;
 }
 
 /**
  * Style the logo into all caps and white.
 **/
 
-#logo {
+.logo {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
@@ -66,18 +72,18 @@ h4 {
   font-weight: bold;
 }
 
-#left {
+.left {
   padding-right: 45px;
 }
 /**
  * Style the search bar.
 **/
 
-#search-bar {
+.search-bar {
   padding-top: 9px;
 }
 
-#search-bar button {
+.search-bar button {
   border: 0;
   background: none;
   /** belows styles are working good */
@@ -92,7 +98,3 @@ h4 {
   border-radius: 3px;
   color:#428bca;
 }
-        /*
-
-
-*/

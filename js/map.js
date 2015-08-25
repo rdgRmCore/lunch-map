@@ -16,7 +16,6 @@ var initialParks = [
       "Geocaching", "Hiking Trails", "SCUBA Diving", "Swimming"
     ]
   },
-/* */
   {
     name : "Moraine Hills",
     latLng : {lat: 42.309754, lng: -88.227623},
@@ -50,8 +49,7 @@ var initialParks = [
       "Picnicking", "Horseback Riding", "Equestrian Camping", "Hunting", "Trails"
     ]
   }
-/* */
-]
+];
 
 // Sort an array by the name property
 function SortByName(a,b) {
@@ -63,7 +61,7 @@ function SortByName(a,b) {
 }
 
 function initialize(){
-  map = new google.maps.Map(document.getElementById("map-canvas"), {
+  map = new google.maps.Map(document.getElementById("park-map"), {
     center: {lat: 42.190220, lng: -87.941175},
     zoom: 8
   });
@@ -81,14 +79,14 @@ var Park = function(data){
   this.name = ko.observable(data.name);
   this.latLng = ko.observable(data.latLng);
   this.activities = ko.observable(data.activities);
-  this.officialUrl = "Unable to retrieve data from Wikipedia."
+  this.officialUrl = "Unable to retrieve data from Wikipedia.";
 }
 
 var ViewModel = function() {
   var self = this;
   
-  this.officialUrlCache = new Object;
-  this.parkList = ko.observableArray([]);
+  self.officialUrlCache = new Object;
+  self.parkList = ko.observableArray();
 
   // Alphabetize the list of park names
   initialParks.sort(SortByName);
@@ -100,7 +98,7 @@ var ViewModel = function() {
   });
 
   // Draw markers for every park in the park list
-  this.drawMarkers = function() {
+  self.drawMarkers = function() {
     self.parkList().forEach(function(item){
       item.marker = new google.maps.Marker({
         position: item.latLng(),
@@ -124,7 +122,7 @@ var ViewModel = function() {
   };
   
   // Respond to letters typed in the search box
-  this.search = function(value) {
+  self.search = function(value) {
     // Start by clearing all the markers from the map
     self.parkList().forEach(function(item){
       item.marker.setMap(null);
@@ -150,7 +148,7 @@ var ViewModel = function() {
   };
   
   // Retrieve data from the Wikipedia API
-  this.loadWikiInfo = function() {
+  self.loadWikiInfo = function() {
     self.parkList().forEach(function(item){
       var searchString = encodeURIComponent(item.name() + " State Park");
       var wikipediaUrl = WIKIPEDIA_BASE + searchString;
@@ -179,7 +177,7 @@ var ViewModel = function() {
   };
 
   //Function that displays official website url
-  this.displayOfficialUrl = function (Park) {
+  self.displayOfficialUrl = function (Park) {
     var titleText = "<h4>" + Park.name() + "</h4>";
 
     var  linkText = '<a href="' + Park.officialUrl + '" class="iw-text" ">' + OFFICIAL_INFO + '</a>';
@@ -194,7 +192,7 @@ var ViewModel = function() {
   };
 
   //Function that is called when a park list item is clicked
-  this.parkClick = function(Park, Event) {
+  self.parkClick = function(Park, Event) {
     // Using jQuery, check for any active list items
     if($(".active").length){
       // clear any active list items
@@ -207,17 +205,16 @@ var ViewModel = function() {
   };
 
   // The text that has been entered into the search box
-  this.query = ko.observable('');
+  self.query = ko.observable('');
 
   // create an info window
-  this.createInfoWindow = function() {
+  self.createInfoWindow = function() {
     self.infoWindow = new google.maps.InfoWindow({
       content: "View the official website"
     });
   };
-}
+};
 
 var parkViewModel = new ViewModel();
 ko.applyBindings(parkViewModel);
 parkViewModel.query.subscribe(parkViewModel.search);
-
