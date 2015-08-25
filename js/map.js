@@ -86,13 +86,17 @@ var Park = function(data){
 
 var ViewModel = function() {
   var self = this;
-
+  
+  this.officialUrlCache = new Object;
   this.parkList = ko.observableArray([]);
 
   // Alphabetize the list of park names
   initialParks.sort(SortByName);
   initialParks.forEach(function(item){
-    self.parkList.push( new Park(item) );
+    var park = new Park(item);
+    // use an associative array to keep track of the official url
+    self.officialUrlCache[park.name()] = park.officialUrl;
+    self.parkList.push( park );
   });
 
   // Draw markers for every park in the park list
@@ -133,7 +137,11 @@ var ViewModel = function() {
     initialParks.forEach(function(item){
       // if the entered text is found, add the park to the park list
       if(item.name.toLowerCase().indexOf(value.toLowerCase()) >= 0){
-        self.parkList.push( new Park(item) );
+        var park = new Park(item);
+
+        //retrieve the official url from the url cache
+        park.officialUrl = self.officialUrlCache[park.name()];
+        self.parkList.push( park );
       }
     });
 
@@ -157,6 +165,8 @@ var ViewModel = function() {
                     //pull out the official website address by matching beginning of url
                     if(url.substring(0, DNR_URL.length) === DNR_URL){
                       item.officialUrl = url;
+                      //save a copy of the url in an associative array
+                      self.officialUrlCache[item.name()] = url;
                     }
                     return "<a>" + url + "</a>";
                   });
