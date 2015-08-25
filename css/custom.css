@@ -11,6 +11,31 @@ body{
   color: white;
 }
 
+/* Document level adjustments */
+html,body, .iw-text {
+  font-size: 17px;
+}
+@media (max-width: 900px) {
+  html,body, .iw-text { font-size: 15px; }
+}
+@media (max-width: 400px) {
+  html,body, .iw-text { font-size: 13px; }
+}
+
+/* Type will scale with document */
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2.5rem;
+}
+h3 {
+  font-size: 2rem;
+}
+h4 {
+  font-size: 1.5rem;
+}
+
 
 /**
  * Place the map on the right 75% of the screen.

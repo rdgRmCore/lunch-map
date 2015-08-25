@@ -172,7 +172,7 @@ var ViewModel = function() {
   this.displayOfficialUrl = function (Park) {
     var titleText = "<h4>" + Park.name() + "</h4>";
 
-    var  linkText = '<a href="' + Park.officialUrl + '">' + OFFICIAL_INFO + '</a>';
+    var  linkText = '<a href="' + Park.officialUrl + '" class="iw-text" ">' + OFFICIAL_INFO + '</a>';
     // If the call to wikipedia fails to retrieve a valid url
     if(Park.officialUrl.substring(0, UNABLE.length) === UNABLE){
       linkText = '';
