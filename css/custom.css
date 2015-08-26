@@ -19,7 +19,7 @@ body {
   display: inline-block;
 }
 
-.list-group-horizontal ,
+.list-group-horizontal,
 .item-horizontal {
   margin-bottom: 0;
   margin-left:-4px;

@@ -81,12 +81,14 @@ function initialize(){
     zoom: 8
   });
 
+  // Set map size based on width in order to achieve responsive map
   var winWidth = document.body.parentNode.clientWidth;
   SetMapSize(winWidth);
 
+  // When the window resizes, trigger the resize event on the google map
   $(window).resize(function() {
-    var winWidth = document.body.parentNode.clientWidth;
-    SetMapSize(winWidth);
+    var currentWinWidth = document.body.parentNode.clientWidth;
+    SetMapSize(currentWinWidth);
     google.maps.event.trigger(map, "resize");
     
   });
