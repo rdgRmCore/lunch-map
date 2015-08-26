@@ -123,8 +123,20 @@ var ViewModel = function() {
     self.parkList.push( park );
   });
 
+  // Center the map on the markers
+  self.centerMap = function() {
+    var latLngBounds = new google.maps.LatLngBounds();
+    self.parkList().forEach(function(item){
+      latLngBounds.extend(item.marker.getPosition());
+      map.setCenter(latLngBounds.getCenter());
+      map.fitBounds(latLngBounds);   
+    });
+  };
+
+
   // Draw markers for every park in the park list
   self.drawMarkers = function() {
+    // Loop throu each item in the park list
     self.parkList().forEach(function(item){
       item.marker = new google.maps.Marker({
         position: item.latLng(),
@@ -145,6 +157,8 @@ var ViewModel = function() {
         self.displayOfficialUrl(item);
       });
     });
+
+    self.centerMap();
   };
   
   // Respond to letters typed in the search box
