@@ -46,16 +46,27 @@
            on the left-->
       <div class="row"> 
 
-        <div class="col-xs-3 left">
+        <div class="col-sm-12 visible-xs">
           <!-- Use knockout data bindings to generate a list of park names -->
-          <div class="list-group">
-            <ul data-bind="foreach: parkList">
-              <li class="list-group-item" data-bind="text: name, click: $parent.parkClick"></li>
+          <div class="list-group-horizontal">
+            <ul class="list-inline" data-bind="foreach: parkList">
+              <li class="list-group-item item-horizontal" 
+                  data-bind="text: name, click: $parent.parkClick"></li>
             </ul>
           </div>
         </div>
 
-        <div class="col-xs-9" >
+        <div class="col-sm-3 visible-sm visible-md visible-lg left">
+          <!-- Use knockout data bindings to generate a list of park names -->
+          <div class="list-group">
+            <ul data-bind="foreach: parkList">
+              <li class="list-group-item" 
+                  data-bind="text: name, click: $parent.parkClick"></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-sm-9" >
         </div>
 
       </div>

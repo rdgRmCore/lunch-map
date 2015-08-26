@@ -62,11 +62,35 @@ function SortByName(a,b) {
   return 0;
 }
 
+function SetMapSize(WinWidth){
+  console.log("Detected width: " + WinWidth);
+  if (WinWidth < 753 ){
+    $(".map-canvas").css("right", "0");
+    $(".map-canvas").css("width", "100%");
+    $(".map-canvas").css("top",   "170px");
+  } else {
+    $(".map-canvas").css("right", "16px");
+    $(".map-canvas").css("width", "75%");
+    $(".map-canvas").css("top",   "75px");
+  }
+}
+
 function initialize(){
   map = new google.maps.Map(document.getElementById("park-map"), {
     center: {lat: 42.190220, lng: -87.941175},
     zoom: 8
   });
+
+  var winWidth = document.body.parentNode.clientWidth;
+  SetMapSize(winWidth);
+
+  $(window).resize(function() {
+    var winWidth = document.body.parentNode.clientWidth;
+    SetMapSize(winWidth);
+    google.maps.event.trigger(map, "resize");
+    
+  });
+
   parkViewModel.drawMarkers();
   parkViewModel.loadWikiInfo();
   parkViewModel.createInfoWindow();
