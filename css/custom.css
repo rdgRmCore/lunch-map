@@ -83,8 +83,7 @@ h4 {
 **/
 .map-canvas {
   width: 75%;
-  /*height:calc(100% - 0);*/
-  height: 100%;
+  height:calc(100% - 0);
   position: absolute;
   right: 16px;
   top: 70px;

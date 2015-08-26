@@ -92,6 +92,7 @@ function initialize(){
   });
 
   parkViewModel.drawMarkers();
+  parkViewModel.centerMap();
   parkViewModel.loadWikiInfo();
   parkViewModel.createInfoWindow();
 }
@@ -158,7 +159,6 @@ var ViewModel = function() {
       });
     });
 
-    self.centerMap();
   };
   
   // Respond to letters typed in the search box
