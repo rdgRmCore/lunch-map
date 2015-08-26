@@ -4,7 +4,7 @@ body {
   height: 100%; 
 }
 
-body{
+body {
   padding-top:70px; /*padding for search bar*/
 }
 
@@ -18,27 +18,36 @@ body,
 .iw-text {
   font-size: 17px;
 }
+
 @media (max-width: 900px) {
   html,
   body, 
-  .iw-text { font-size: 15px; }
+  .iw-text { 
+    font-size: 15px; 
+  }
 }
+
 @media (max-width: 400px) {
   html,
   body, 
-  .iw-text { font-size: 13px; }
+  .iw-text { 
+    font-size: 13px; 
+  }
 }
 
 /* Type will scale with document */
 h1 {
   font-size: 3rem;
 }
+
 h2 {
   font-size: 2.5rem;
 }
+
 h3 {
   font-size: 2rem;
 }
+
 h4 {
   font-size: 1.5rem;
 }
@@ -75,6 +84,7 @@ h4 {
 .left {
   padding-right: 45px;
 }
+
 /**
  * Style the search bar.
 **/

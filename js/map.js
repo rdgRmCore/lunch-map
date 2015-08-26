@@ -53,10 +53,12 @@ var initialParks = [
 
 // Sort an array by the name property
 function SortByName(a,b) {
-  if (a.name < b.name)
+  if (a.name < b.name) {
     return -1;
-  if (a.name > b.name)
+  }
+  if (a.name > b.name){
     return 1;
+  }
   return 0;
 }
 
@@ -80,12 +82,12 @@ var Park = function(data){
   this.latLng = ko.observable(data.latLng);
   this.activities = ko.observable(data.activities);
   this.officialUrl = "Unable to retrieve data from Wikipedia.";
-}
+};
 
 var ViewModel = function() {
   var self = this;
   
-  self.officialUrlCache = new Object;
+  self.officialUrlCache = new Object();
   self.parkList = ko.observableArray();
 
   // Alphabetize the list of park names
